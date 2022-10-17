@@ -1,7 +1,6 @@
 package m.wb.compose.notinger
 
 import android.os.Bundle
-import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
@@ -20,6 +19,10 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
 import m.wb.compose.notinger.ui.theme.NotingerTheme
 import m.wb.compose.notinger.ui.theme.defaultGreen
 
@@ -33,7 +36,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colors.background
                 ) {
-                    Launcher()
+                    Navigation()
                 }
             }
         }
@@ -41,7 +44,20 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun Launcher() {
+fun Navigation() {
+    val navController = rememberNavController()
+    NavHost(navController = navController, startDestination = "launcher") {
+        composable(route = "launcher") {
+            Launcher(navController)
+        }
+        composable(route = "home") {
+            Home()
+        }
+    }
+}
+
+@Composable
+fun Launcher(navController: NavController) {
     val context = LocalContext.current
     Column(
         verticalArrangement = Arrangement.SpaceBetween,
@@ -57,7 +73,7 @@ fun Launcher() {
         Image(painter = painterResource(id = R.drawable.image_note), contentDescription = "Logo")
         Button(
             onClick = {
-                Toast.makeText(context, "This is a Sample Toast", Toast.LENGTH_LONG).show()
+                navController.navigate("home")
             }, contentPadding = PaddingValues(horizontal = 72.dp, vertical = 12.dp),
             colors = ButtonDefaults.buttonColors(backgroundColor = defaultGreen),
             shape = RoundedCornerShape(6.dp)
@@ -72,10 +88,26 @@ fun Launcher() {
     }
 }
 
+@Composable
+fun Home() {
+    Column(
+        verticalArrangement = Arrangement.SpaceBetween,
+        modifier = Modifier.padding(horizontal = 32.dp, vertical = 72.dp),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Text(
+            text = "Second Screen",
+            fontFamily = FontFamily(Font(R.font.poppins_semi)),
+            fontSize = 24.sp,
+            textAlign = TextAlign.Center
+        )
+    }
+}
+
 @Preview(showSystemUi = true)
 @Composable
 fun DefaultPreview() {
     NotingerTheme {
-        Launcher()
+        Navigation()
     }
 }
