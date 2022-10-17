@@ -6,13 +6,12 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.Button
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
-import androidx.compose.material.Text
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.Font
@@ -22,6 +21,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import m.wb.compose.notinger.ui.theme.NotingerTheme
+import m.wb.compose.notinger.ui.theme.defaultGreen
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -50,18 +50,23 @@ fun Launcher() {
     ) {
         Text(
             text = "Keep Your Important Notes",
-            fontFamily = FontFamily(Font(R.font.poppins_bold)),
+            fontFamily = FontFamily(Font(R.font.poppins_semi)),
             fontSize = 24.sp,
             textAlign = TextAlign.Center
         )
         Image(painter = painterResource(id = R.drawable.image_note), contentDescription = "Logo")
-        Button(onClick = {
-            Toast.makeText(context, "This is a Sample Toast", Toast.LENGTH_LONG).show()
-        }, contentPadding = PaddingValues(horizontal = 72.dp, vertical = 12.dp)) {
+        Button(
+            onClick = {
+                Toast.makeText(context, "This is a Sample Toast", Toast.LENGTH_LONG).show()
+            }, contentPadding = PaddingValues(horizontal = 72.dp, vertical = 12.dp),
+            colors = ButtonDefaults.buttonColors(backgroundColor = defaultGreen),
+            shape = RoundedCornerShape(6.dp)
+        ) {
             Text(
                 text = "Write Your Notes",
                 fontFamily = FontFamily(Font(R.font.poppins_bold)),
-                fontSize = 14.sp
+                fontSize = 14.sp,
+                color = Color.White
             )
         }
     }
